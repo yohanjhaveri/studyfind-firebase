@@ -1,0 +1,39 @@
+{
+  "name": "@studyfind/firebase",
+  "version": "0.2.4",
+  "repository": "https://github.com/StudyFind/studyfind-firebase.git",
+  "author": "Yohan Jhaveri <yohanjhaveri@gmail.com>",
+  "license": "MIT",
+  "description": "",
+  "main": "lib/index.js",
+  "type": "module",
+  "private": false,
+  "scripts": {
+    "build": "babel src --out-dir lib",
+    "prepublishOnly": "yarn build",
+    "lint": "eslint ./src --ext .js,.jsx"
+  },
+  "np": {
+    "publish": false,
+    "tests": false
+  },
+  "keywords": [],
+  "devDependencies": {
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.6",
+    "@babel/preset-react": "^7.14.5",
+    "eslint": "^7.32.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jest": "^24.4.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.25.1",
+    "eslint-plugin-react-hooks": "^4.2.0"
+  },
+  "dependencies": {
+    "@studyfind/utils": "^0.6.4",
+    "moment-timezone": "^0.5.33",
+    "react": "^17.0.2",
+    "react-firebase-hooks": "^3.0.4"
+  }
+}
