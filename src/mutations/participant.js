@@ -3,14 +3,12 @@ import moment from "moment-timezone";
 const guessedTimezone = moment.tz.guess();
 
 export class Participant {
-  constructor(uid, firestore) {
-    this.uid = uid;
-    this.firestore = firestore;
-    this.participantRef = firestore.collection("participants").doc(uid);
+  constructor(ref) {
+    this.ref = ref;
   }
 
   create() {
-    this.participantRef.set({
+    this.ref.set({
       organization: "",
       background: "",
       timezone: {
@@ -42,7 +40,7 @@ export class Participant {
     },
     notifications: { local, email, phone },
   }) {
-    this.participantRef.update({
+    this.ref.update({
       organization,
       background,
       timezone: {
@@ -62,6 +60,6 @@ export class Participant {
   }
 
   delete() {
-    this.participantRef.delete();
+    this.ref.delete();
   }
 }

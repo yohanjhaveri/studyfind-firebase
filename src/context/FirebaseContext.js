@@ -35,12 +35,14 @@ export const FirebaseProvider = ({ children, app }) => {
   };
 
   // AUTH
-  const type = getType();
+  const mutator = (uid) => {
+    const type = getType();
 
-  const Mutator = {
-    participant: Participant,
-    researcher: Researcher,
-  }[type];
+    return {
+      participant: Participant(firestore.collection("participants").doc(uid)),
+      researcher: Researcher(firestore.collection("researchers").doc(uid)),
+    }[type];
+  };
 
   const setLocalUserExists = (value) => {
     localStorage.setItem("exists", value);
@@ -61,7 +63,7 @@ export const FirebaseProvider = ({ children, app }) => {
     await Promise.all([
       user.sendEmailVerification(),
       user.updateProfile({ displayName: name }),
-      Mutator(user.uid, firestore).create(),
+      mutator(user.uid).create(),
     ]);
 
     setLocalUserExists(true);
@@ -93,7 +95,7 @@ export const FirebaseProvider = ({ children, app }) => {
 
   const deleteAccount = async ({ email, password }) => {
     const user = await authenticate({ email, password });
-    await Mutator(user.uid, firestore).delete();
+    await mutator(user.uid).delete();
     await user.delete();
     setLocalUserExists(false);
   };
