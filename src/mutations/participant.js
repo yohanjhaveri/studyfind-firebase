@@ -1,15 +1,20 @@
-import { firestore } from "database/firebase";
-import { getTimezone } from "database/getters";
+import moment from "moment-timezone";
 
-const participantRef = (uid) => firestore.collection("participants").doc(uid);
+const guessedTimezone = moment.tz.guess();
 
-export const participant = {
-  create: (uid) =>
-    participantRef(uid).set({
+export class Participant {
+  constructor(uid, firestore) {
+    this.uid = uid;
+    this.firestore = firestore;
+    this.participantRef = firestore.collection("participants").doc(uid);
+  }
+
+  create() {
+    this.participantRef.set({
       organization: "",
       background: "",
       timezone: {
-        region: getTimezone(),
+        region: guessedTimezone,
         autodetect: true,
       },
       location: {
@@ -24,22 +29,20 @@ export const participant = {
         email: false,
         phone: false,
       },
-    }),
+    });
+  }
 
-  update: (
-    uid,
-    {
-      organization,
-      background,
-      timezone: { region, autodetect },
-      location: {
-        address,
-        coordinates: { latitude, longitude },
-      },
-      notifications: { local, email, phone },
-    }
-  ) =>
-    participantRef(uid).update({
+  update({
+    organization,
+    background,
+    timezone: { region, autodetect },
+    location: {
+      address,
+      coordinates: { latitude, longitude },
+    },
+    notifications: { local, email, phone },
+  }) {
+    this.participantRef.update({
       organization,
       background,
       timezone: {
@@ -55,7 +58,10 @@ export const participant = {
         email,
         phone,
       },
-    }),
+    });
+  }
 
-  delete: (uid) => participantRef(uid).delete(),
-};
+  delete() {
+    this.participantRef.delete();
+  }
+}

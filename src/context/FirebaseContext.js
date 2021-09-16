@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { participant, researcher } from "mutations";
+import { Participant, Researcher } from "mutations";
 
 export const FirebaseContext = createContext(null);
 
@@ -36,7 +36,11 @@ export const FirebaseProvider = ({ children, app }) => {
 
   // AUTH
   const type = getType();
-  const mutator = { participant, researcher }[type];
+
+  const Mutator = {
+    participant: Participant,
+    researcher: Researcher,
+  }[type];
 
   const setLocalUserExists = (value) => {
     localStorage.setItem("exists", value);
@@ -57,7 +61,7 @@ export const FirebaseProvider = ({ children, app }) => {
     await Promise.all([
       user.sendEmailVerification(),
       user.updateProfile({ displayName: name }),
-      mutator.create(user.uid),
+      Mutator(user.uid, firestore).create(),
     ]);
 
     setLocalUserExists(true);
@@ -89,7 +93,7 @@ export const FirebaseProvider = ({ children, app }) => {
 
   const deleteAccount = async ({ email, password }) => {
     const user = await authenticate({ email, password });
-    await mutator.delete(user.uid);
+    await Mutator(user.uid, firestore).delete();
     await user.delete();
     setLocalUserExists(false);
   };

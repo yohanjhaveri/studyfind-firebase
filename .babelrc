@@ -6,5 +6,19 @@
         "runtime": "automatic"
       }
     ]
+  ],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["."],
+        "alias": {
+          "constants": "./lib/constants",
+          "context": "./lib/context",
+          "hooks": "./lib/hooks",
+          "mutations": "./lib/mutations"
+        }
+      }
+    ]
   ]
 }

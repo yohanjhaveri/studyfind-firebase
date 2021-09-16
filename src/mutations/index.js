@@ -1,2 +1,2 @@
-export { participant } from "./participant";
-export { researcher } from "./researcher";
+export { Participant } from "./participant";
+export { Researcher } from "./researcher";

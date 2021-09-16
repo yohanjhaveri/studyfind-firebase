@@ -1,15 +1,20 @@
-import { firestore } from "database/firebase";
-import { getTimezone } from "database/getters";
+import moment from "moment-timezone";
 
-const researcherRef = (uid) => firestore.collection("researchers").doc(uid);
+const guessedTimezone = moment.tz.guess();
 
-export const researcher = {
-  create: (uid) =>
-    researcherRef(uid).set({
+export class Researcher {
+  constructor(uid, firestore) {
+    this.uid = uid;
+    this.firestore = firestore;
+    this.researcherRef = firestore.collection("researchers").doc(uid);
+  }
+
+  create() {
+    this.researcherRef.set({
       organization: "",
       background: "",
       timezone: {
-        region: getTimezone(),
+        region: guessedTimezone,
         autodetect: true,
       },
       notifications: {
@@ -17,18 +22,16 @@ export const researcher = {
         email: false,
         phone: false,
       },
-    }),
+    });
+  }
 
-  update: (
-    uid,
-    {
-      organization,
-      background,
-      timezone: { region, autodetect },
-      notifications: { local, email, phone },
-    }
-  ) =>
-    researcherRef(uid).update({
+  update({
+    organization,
+    background,
+    timezone: { region, autodetect },
+    notifications: { local, email, phone },
+  }) {
+    this.researcherRef.update({
       organization,
       background,
       timezone: {
@@ -40,7 +43,10 @@ export const researcher = {
         email,
         phone,
       },
-    }),
+    });
+  }
 
-  delete: (uid) => researcherRef(uid).delete(),
-};
+  delete() {
+    this.researcherRef.delete();
+  }
+}
