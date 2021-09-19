@@ -1,7 +1,7 @@
-export { default as useAuthentication } from "./hooks/useAuthentication";
-export { default as usePagination } from "./hooks/usePagination";
-export { default as useCollection } from "./hooks/useCollection";
-export { default as useDocument } from "./hooks/useDocument";
-export { default as useFirebase } from "./hooks/useFirebase";
+export { default as useAuthentication } from "./tools/hooks/useAuthentication";
+export { default as usePagination } from "./tools/hooks/usePagination";
+export { default as useCollection } from "./tools/hooks/useCollection";
+export { default as useDocument } from "./tools/hooks/useDocument";
+export { default as useFirebase } from "./tools/hooks/useFirebase";
 
-export { FirebaseContext, FirebaseProvider } from "./context/FirebaseContext";
+export { FirebaseProvider } from "./tools/context/FirebaseContext";
