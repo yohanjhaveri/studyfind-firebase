@@ -11,7 +11,7 @@
   "scripts": {
     "build": "babel src --out-dir lib",
     "prepublishOnly": "yarn build",
-    "lint": "eslint ./src --ext .js,.jsx"
+    "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx"
   },
   "np": {
     "publish": false,
@@ -31,7 +31,7 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.25.1",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "firebase": "^9.0.2"
+    "firebase": "^8.2.3"
   },
   "dependencies": {
     "@studyfind/utils": "^0.6.4",

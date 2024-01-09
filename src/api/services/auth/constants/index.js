@@ -1,1 +1,0 @@
-export { firebaseAuthErrors } from "./firebaseAuthErrors";
